@@ -8,18 +8,24 @@
     (goto-char (point-max))
     (eval-print-last-sexp)))
 
-(setq package-archives
-      (cons '("melpa" . "http://melpa.milkbox.net/packages/")
-            package-archives))
-
 (setq my:el-get-packages
       '(
+        ac-math
+        ac-python
+        auto-complete
+        auto-complete-css
+        auto-complete-emacs-lisp
+        auto-complete-latex
+        auto-complete-yasnippet
+        auctex
         el-get
         evil
         full-ack
         js2-mode
+        json
         lorem-ipsum
         markdown-mode
+        python-mode
         rainbow-delimiters
         ssh
         undo-tree
@@ -28,13 +34,24 @@
 
 (setq el-get-sources
       '(
+        (:name semver
+               :type github
+               :pkgname "hendrikvanantwerpen/semver.el")
         (:name amd-mode
                :type github
-               :pkgname "hendrikvanantwerpen/amd-mode.el")
+               :pkgname "hendrikvanantwerpen/amd-mode.el"
+               :depends (semver))
+        (:name auto-complete
+               :type github
+               :pkgname "auto-complete/auto-complete"
+               :depends (popup fuzzy))
         (:name css-mode
                :type elpa)
         (:name dash
                :type elpa)
+        (:name fuzzy
+               :type github
+               :pkgname "auto-complete/fuzzy-el")
         (:name js2-refactor
                :type github
                :pkgname "magnars/js2-refactor.el"
@@ -45,6 +62,9 @@
                :type elpa)
         (:name load-dir
                :type elpa)
+        (:name popup
+               :type github
+               :pkgname "auto-complete/popup-el")
         (:name s
                :type elpa)
         ))
@@ -99,6 +119,8 @@
 (add-hook 'js2-post-parse-callbacks
           (lambda () (progn (add-to-list 'js2-additional-externs "define")
                             (add-to-list 'js2-additional-externs "require"))))
+
+(require 'python-mode)
 
 (require 'rainbow-delimiters)
 (global-rainbow-delimiters-mode t)
