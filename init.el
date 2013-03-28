@@ -104,8 +104,7 @@
 (require 'amd-mode)
 (require 'js2-refactor)
 (add-hook 'js2-mode-hook (lambda () (progn
-                                      (amd-mode)
-                                      (js2-refactor))))
+                                      (amd-mode))))
 (add-hook 'js2-post-parse-callbacks
           (lambda () (progn (add-to-list 'js2-additional-externs "define")
                             (add-to-list 'js2-additional-externs "require"))))
