@@ -3,10 +3,12 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
+    (url-retrieve
+     "https://raw.github.com/dimitri/el-get/master/el-get-install.el"
+     (lambda (s)
+             (let (el-get-master-branch)
+                  (goto-char (point-max))
+                  (eval-print-last-sexp))))))
 
 (setq my:el-get-packages
       '(
@@ -18,11 +20,14 @@
         auto-complete-latex
         auto-complete-yasnippet
         auctex
+        css-mode
         el-get
         evil
         full-ack
         js2-mode
+        js2-refactor
         json
+        load-dir
         lorem-ipsum
         markdown-mode
         python-mode
@@ -36,36 +41,19 @@
       '(
         (:name semver
                :type github
-               :pkgname "hendrikvanantwerpen/semver.el")
+               :pkgname "hendrikvanantwerpen/semver.el"
+               :depends (dash s))
+        (:name js-pkg
+               :type github
+               :pkgname "hendrikvanantwerpen/js-pkg.el"
+               :depends (dash s semver json))
         (:name amd-mode
                :type github
                :pkgname "hendrikvanantwerpen/amd-mode.el"
-               :depends (semver))
-        (:name auto-complete
-               :type github
-               :pkgname "auto-complete/auto-complete"
-               :depends (popup fuzzy))
-        (:name css-mode
-               :type elpa)
-        (:name dash
-               :type elpa)
-        (:name fuzzy
-               :type github
-               :pkgname "auto-complete/fuzzy-el")
-        (:name js2-refactor
-               :type github
-               :pkgname "magnars/js2-refactor.el"
-               :depends (js2-mode dash multiple-cursors s))
-        (:name multiple-cursors
-               :type elpa)
+               :depends (dash js-pkg semver))
         (:name less-css-mode
                :type elpa)
         (:name load-dir
-               :type elpa)
-        (:name popup
-               :type github
-               :pkgname "auto-complete/popup-el")
-        (:name s
                :type elpa)
         ))
 
@@ -96,6 +84,8 @@
 (define-key evil-normal-state-map (kbd "TAB") 'other-window)
 (define-key evil-normal-state-map "H" 'evil-next-buffer)
 (define-key evil-normal-state-map "L" 'evil-prev-buffer)
+(define-key evil-motion-state-map [prior] 'evil-scroll-page-up)
+(define-key evil-motion-state-map [next] 'evil-scroll-page-down)
 (evil-mode 1)
 
 (require 'ido)
