@@ -14,16 +14,18 @@
       '(
         ac-math
         ac-python
+        amd-mode
+        ;auctex --- install crashes
         auto-complete
         auto-complete-css
         auto-complete-emacs-lisp
         auto-complete-latex
         auto-complete-yasnippet
-        auctex
-        css-mode
+        autopair
         el-get
         evil
         full-ack
+        js-pkg
         js2-mode
         js2-refactor
         json
@@ -32,6 +34,9 @@
         markdown-mode
         python-mode
         rainbow-delimiters
+        semver
+        smart-operator
+        smartparens
         ssh
         undo-tree
         yasnippet
@@ -42,36 +47,39 @@
         (:name semver
                :type github
                :pkgname "hendrikvanantwerpen/semver.el"
-               :depends (dash s))
+               :depends (s))
         (:name js-pkg
                :type github
                :pkgname "hendrikvanantwerpen/js-pkg.el"
-               :depends (dash s semver json))
+               :depends (json s semver))
         (:name amd-mode
                :type github
                :pkgname "hendrikvanantwerpen/amd-mode.el"
-               :depends (dash js-pkg semver))
+               :depends (js2-mode js-pkg semver auto-complete dash s ))
         (:name less-css-mode
                :type elpa)
         (:name load-dir
                :type elpa)
         ))
 
-(setq my:el-get-packages
-      (append my:el-get-packages
-              (mapcar 'el-get-source-name el-get-sources)))
-
 (el-get 'sync my:el-get-packages)
 
-; misc basic stuff
-(setq-default indent-tabs-mode nil)
-(setq tab-width 4)
-(setq split-width-threshold 100)
-(show-paren-mode t)
+; tabs
+(setq-default indent-tabs-mode nil) ; no tabs please
+(setq-default tab-width 4)
+(setq tab-stop-list (number-sequence 4 200 4))
 
-(require 'desktop)
-(setq desktop-restore-eager t)
-(desktop-save-mode t)
+; windows
+(setq split-width-threshold 100) ; prefer horizontal splits
+(define-key input-decode-map "\e[1;2A" [S-up]) ; fix xterm/console problem
+(windmove-default-keybindings)
+(winner-mode t)
+
+; parens highlighting on
+(show-paren-mode t) ; highlight parens matches
+
+; full-ack
+(setq ack-executable (executable-find "ack-grep"))
 
 (require 'undo-tree)
 (global-undo-tree-mode t)
@@ -82,6 +90,8 @@
 (setq-default evil-auto-indent t)
 (setq evil-want-visual-char-semi-exclusive t)
 (define-key evil-normal-state-map (kbd "TAB") 'other-window)
+(define-key evil-normal-state-map (kbd "<backtab>")
+  (lambda () (interactive) (other-window -1)))
 (define-key evil-normal-state-map "H" 'evil-next-buffer)
 (define-key evil-normal-state-map "L" 'evil-prev-buffer)
 (define-key evil-motion-state-map [prior] 'evil-scroll-page-up)
@@ -97,19 +107,56 @@
 (setq linum-format "%3d ")
 (global-linum-mode t)
 
-; Javascript
+(require 'smartparens-config)
+(smartparens-global-mode 1)
+
+(require 'auto-complete-config)
+(ac-config-default)
+(ac-set-trigger-key "TAB")
+
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'load-path "~/.emacs.d/amd-mode/")
-(require 'amd-mode)
 (require 'js2-refactor)
-(add-hook 'js2-mode-hook (lambda () (progn
-                                      (amd-mode))))
+;(setq load-path (cons "~/prog/amd-mode.el/" load-path))
+(require 'amd-mode)
+(require 'ac-amd)
+(add-hook 'js2-mode-hook
+          (lambda ()
+            (setq ac-sources nil)
+            (amd-mode)
+            (ac-amd-setup)
+            (auto-complete-mode)))
 (add-hook 'js2-post-parse-callbacks
-          (lambda () (progn (add-to-list 'js2-additional-externs "define")
-                            (add-to-list 'js2-additional-externs "require"))))
+          (lambda() 
+            (amd-externs-setup)))
 
-(require 'python-mode)
+(require 'amd-dojo-plugins)
+(amd-dojo-plugins-setup)
+
+(require 'ac-amd-dojo-completions)
+(ac-amd-dojo-completions-setup)
 
 (require 'rainbow-delimiters)
 (global-rainbow-delimiters-mode t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(smartparens-global-mode t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(defun simple-tabs-mode ()
+  "Bind TAB to simple tabs, instead of whatever indent function is active."
+  (interactive)
+  (setq indent-line-function 'insert-tab))
+
+(defun truncate-mode ()
+  "Enable line truncation for this buffer."
+  (interactive)
+  (setq truncate-lines t))
