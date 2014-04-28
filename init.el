@@ -15,7 +15,7 @@
         ac-math
         ac-python
         amd-mode
-        ;auctex --- install crashes
+        auctex
         auto-complete
         auto-complete-css
         auto-complete-emacs-lisp
@@ -78,6 +78,7 @@
 (winner-mode t)
 
 ; parens highlighting on
+(smartparens-global-mode t)
 (show-paren-mode t) ; highlight parens matches
 
 ; full-ack
@@ -143,18 +144,19 @@
 (require 'rainbow-delimiters)
 (global-rainbow-delimiters-mode t)
 
-(defun my-agda2-mode-hook ()
-  "Modify keys and input-mode for agda mode"
-  (local-set-key (kbd "C-c .") 'agda2-goal-and-context-and-inferred)
-  (local-set-key (kbd "C-c ,") 'agda2-goal-and-context)
-  (local-set-key (kbd "C-c ?") 'agda2-show-goals)
-  (local-set-key (kbd "C-c =") 'agda2-show-constraints)
-  (local-set-key (kbd "C-c C-@") 'agda2-give)
-  (add-hook 'evil-insert-state-entry-hook
-            (lambda () (set-input-method "Agda")))
-  (add-hook 'evil-insert-state-exit-hook
-            (lambda () (set-input-method nil))))
-(add-hook 'agda2-mode-hook 'my-agda2-mode-hook)
+(when (require 'agda2-mode)
+  (defun my-agda2-mode-hook ()
+    "Modify keys and input-mode for agda mode"
+    (local-set-key (kbd "C-c .") 'agda2-goal-and-context-and-inferred)
+    (local-set-key (kbd "C-c ,") 'agda2-goal-and-context)
+    (local-set-key (kbd "C-c ?") 'agda2-show-goals)
+    (local-set-key (kbd "C-c =") 'agda2-show-constraints)
+    (local-set-key (kbd "C-c C-@") 'agda2-give)
+    (add-hook 'evil-insert-state-entry-hook
+              (lambda () (set-input-method "Agda")))
+    (add-hook 'evil-insert-state-exit-hook
+              (lambda () (set-input-method nil))))
+  (add-hook 'agda2-mode-hook 'my-agda2-mode-hook))
 
 (defun simple-tabs-mode ()
   "Bind TAB to simple tabs, instead of whatever indent function is active."
@@ -181,7 +183,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(smartparens-global-mode t))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
