@@ -22,6 +22,7 @@
         auto-complete-latex
         auto-complete-yasnippet
         autopair
+        coffee-mode
         el-get
         evil
         full-ack
@@ -34,6 +35,7 @@
         markdown-mode
         python-mode
         rainbow-delimiters
+        scala-mode2
         semver
         smart-operator
         smartparens
@@ -106,6 +108,8 @@
 (require 'linum)
 (setq linum-format "%3d ")
 (global-linum-mode t)
+(setq line-number-mode t)
+(setq column-number-mode t)
 
 (require 'smartparens-config)
 (smartparens-global-mode 1)
@@ -138,6 +142,40 @@
 
 (require 'rainbow-delimiters)
 (global-rainbow-delimiters-mode t)
+
+(defun my-agda2-mode-hook ()
+  "Modify keys and input-mode for agda mode"
+  (local-set-key (kbd "C-c .") 'agda2-goal-and-context-and-inferred)
+  (local-set-key (kbd "C-c ,") 'agda2-goal-and-context)
+  (local-set-key (kbd "C-c ?") 'agda2-show-goals)
+  (local-set-key (kbd "C-c =") 'agda2-show-constraints)
+  (local-set-key (kbd "C-c C-@") 'agda2-give)
+  (add-hook 'evil-insert-state-entry-hook
+            (lambda () (set-input-method "Agda")))
+  (add-hook 'evil-insert-state-exit-hook
+            (lambda () (set-input-method nil))))
+(add-hook 'agda2-mode-hook 'my-agda2-mode-hook)
+
+(defun simple-tabs-mode ()
+  "Bind TAB to simple tabs, instead of whatever indent function is active."
+  (interactive)
+  (if (local-variable-if-set-p 'my-prev-indent-line-function)
+      (progn (setq-local indent-line-function my-prev-indent-line-function)
+             (setq-local my-prev-indent-line-function nil)
+             (message "Simple tabs mode is off"))
+    (setq-local my-prev-indent-line-function indent-line-function)
+    (setq-local indent-line-function 'insert-tab)
+    (message "Simple tabs mode is on")))
+
+(defun truncate-mode ()
+  "Enable line truncation for this buffer."
+  (interactive)
+  (if truncate-lines
+      (progn (setq-local truncate-lines nil)
+             (message "Truncate mode is off"))
+    (setq-local truncate-lines t)
+    (message "Truncate mode is on")))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -150,13 +188,3 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-(defun simple-tabs-mode ()
-  "Bind TAB to simple tabs, instead of whatever indent function is active."
-  (interactive)
-  (setq indent-line-function 'insert-tab))
-
-(defun truncate-mode ()
-  "Enable line truncation for this buffer."
-  (interactive)
-  (setq truncate-lines t))
