@@ -3,29 +3,36 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
-    (url-retrieve
-     "https://raw.github.com/dimitri/el-get/master/el-get-install.el"
-     (lambda (s)
-             (let (el-get-master-branch)
-                  (goto-char (point-max))
-                  (eval-print-last-sexp))))))
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 
 (setq my:el-get-packages
       '(
+        ac-ghc-mod
+        ac-js2
         ac-math
         ac-python
         amd-mode
         auctex
         auto-complete
+        auto-complete-auctex
         auto-complete-css
         auto-complete-emacs-lisp
         auto-complete-latex
+        auto-complete-ruby
         auto-complete-yasnippet
         autopair
         coffee-mode
+        ebib
         el-get
+        ensime
         evil
+        flyspell
         full-ack
+        haskell-mode
         js-pkg
         js2-mode
         js2-refactor
@@ -35,10 +42,12 @@
         markdown-mode
         python-mode
         rainbow-delimiters
+        reftex
         scala-mode2
         semver
         smart-operator
         smartparens
+        sbt-mode
         ssh
         undo-tree
         yasnippet
@@ -58,6 +67,10 @@
                :type github
                :pkgname "hendrikvanantwerpen/amd-mode.el"
                :depends (js2-mode js-pkg semver auto-complete dash s ))
+        (:name ebib
+               :type github
+               :pkgname "hendrikvanantwerpen/ebib"
+               :depends (parsebib))
         (:name less-css-mode
                :type elpa)
         (:name load-dir
@@ -92,7 +105,6 @@
 (setq evil-shift-width 4)
 (setq-default evil-auto-indent t)
 (setq evil-want-visual-char-semi-exclusive t)
-(define-key evil-normal-state-map (kbd "TAB") 'other-window)
 (define-key evil-normal-state-map (kbd "<backtab>")
   (lambda () (interactive) (other-window -1)))
 (define-key evil-normal-state-map "H" 'evil-next-buffer)
@@ -144,7 +156,50 @@
 (require 'rainbow-delimiters)
 (global-rainbow-delimiters-mode t)
 
-(when (require 'agda2-mode)
+; AucTeX
+(setq TeX-PDF-mode t)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq TeX-save-query nil)
+(setq-default TeX-master nil)
+(setq TeX-output-view-style
+  '((("^pdf$" "." "evince build/%o")
+     ("^html?$" "." "x-www-browser build/%o"))))
+;(setq TeX-source-correlate-mode t)
+(setq TeX-command-extra-options "-output-directory=build/")
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-buffer)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+
+; Flyspell
+(setq ispell-program-name "aspell")
+(setq ispell-dictionary "english")
+
+; ebib
+(evil-set-initial-state 'ebib-entry-mode 'emacs)
+(evil-set-initial-state 'ebib-index-mode 'emacs)
+(evil-set-initial-state 'ebib-log-mode 'emacs)
+(defun ebib-multiline-evil-hook ()
+  (setq-local evil-ex-commands nil)
+  (evil-add-to-alist 'evil-ex-commands "wq" 'ebib-quit-multiline-edit-and-save)
+  (evil-add-to-alist 'evil-ex-commands "q" 'ebib-cancel-multiline-edit)
+  (evil-add-to-alist 'evil-ex-commands "quit" "q")
+  (evil-add-to-alist 'evil-ex-commands "w" 'ebib-save-from-multiline-edit)
+  (evil-add-to-alist 'evil-ex-commands "write" "w")
+  (evil-add-to-alist 'evil-ex-commands "h" 'ebib-multiline-help)
+  (evil-add-to-alist 'evil-ex-commands "help" "h"))
+(add-hook 'ebib-multiline-mode-hook 'ebib-multiline-evil-hook)
+
+; HideShow / code folding
+(add-hook 'c-mode-common-hook   'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'java-mode-hook       'hs-minor-mode)
+(add-hook 'lisp-mode-hook       'hs-minor-mode)
+(add-hook 'perl-mode-hook       'hs-minor-mode)
+(add-hook 'sh-mode-hook         'hs-minor-mode)
+
+(when (require 'agda2-mode nil t)
   (defun my-agda2-mode-hook ()
     "Modify keys and input-mode for agda mode"
     (local-set-key (kbd "C-c .") 'agda2-goal-and-context-and-inferred)
@@ -177,13 +232,15 @@
              (message "Truncate mode is off"))
     (setq-local truncate-lines t)
     (message "Truncate mode is on")))
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(ebib-bib-search-dirs (quote ("~/edu/library")))
+ '(ebib-file-associations (quote (("pdf" . "evince") ("ps" . "evince"))))
+ '(ebib-file-search-dirs nil)
+ '(ebib-preload-bib-files (quote ("library.bib"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
