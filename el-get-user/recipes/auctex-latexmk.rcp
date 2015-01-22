@@ -1,0 +1,7 @@
+(:name auctex-latexmk
+       :type github
+       :pkgname "tom-tan/auctex-latexmk"
+       :depends (auctex)
+       :after (progn (auctex-latexmk-setup)
+                     (add-hook 'LaTeX-mode-hook 
+                       (lambda () (setq TeX-command-default "LatexMk")))))

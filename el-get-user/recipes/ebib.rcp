@@ -1,0 +1,4 @@
+(:name ebib
+       :type github
+       :pkgname "hendrikvanantwerpen/ebib"
+       :depends (parsebib))

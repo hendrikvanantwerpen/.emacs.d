@@ -1,0 +1,4 @@
+(:name js-pkg
+       :type github
+       :pkgname "hendrikvanantwerpen/js-pkg.el"
+       :depends (json s semver))
