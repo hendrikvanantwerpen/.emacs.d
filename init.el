@@ -60,6 +60,7 @@
 (el-get 'sync my:el-get-packages)
 
 (require 'init-loader)
+(setq init-loader-byte-compile t)
 (init-loader-load "~/.emacs.d/inits")
 
 (custom-set-variables
