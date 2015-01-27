@@ -35,6 +35,7 @@
         flyspell
         full-ack
         haskell-mode
+        init-loader
         js-pkg
         js2-mode
         js2-refactor
@@ -57,6 +58,9 @@
 
 (el-get-cleanup my:el-get-packages)
 (el-get 'sync my:el-get-packages)
+
+(require 'init-loader)
+(init-loader-load "~/.emacs.d/inits")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
