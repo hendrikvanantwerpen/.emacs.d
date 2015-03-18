@@ -46,11 +46,12 @@
         python-mode
         rainbow-delimiters
         reftex
+        sbt-mode
         scala-mode2
         semver
         smart-operator
         smartparens
-        sbt-mode
+        smooth-scrolling
         ssh
         undo-tree
         yasnippet
