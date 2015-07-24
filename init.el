@@ -44,7 +44,7 @@
         load-dir
         lorem-ipsum
         markdown-mode
-        mvn
+        ;mvn
         python-mode
         rainbow-delimiters
         reftex
