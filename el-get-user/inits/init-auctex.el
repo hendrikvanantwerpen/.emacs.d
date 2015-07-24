@@ -4,6 +4,9 @@
 (setq TeX-fold-mode t)
 (setq TeX-save-query nil)
 (setq TeX-source-correlate-mode t)
+(setq TeX-output-view-style
+      '(("html" "^html$" "x-www-browser %o")
+        ("pdf" "^pdf$" "evince %o")))
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-buffer)

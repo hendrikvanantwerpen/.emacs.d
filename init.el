@@ -44,6 +44,7 @@
         js2-mode
         js2-refactor
         json
+        linum-off
         load-dir
         lorem-ipsum
         markdown-mode
@@ -69,24 +70,6 @@
 (setq init-loader-byte-compile t)
 (init-loader-load "~/.emacs.d/inits")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(TeX-output-view-style
-   (quote
-    (("html" "^html$" "x-www-browser %o")
-     ("pdf" "^pdf$" "evince %o"))))
- '(coq-one-command-per-line nil)
- '(ebib-bib-search-dirs (quote ("~/edu/library")))
- '(ebib-file-associations (quote (("pdf" . "evince") ("ps" . "evince"))))
- '(ebib-file-search-dirs nil)
- '(ebib-index-display-fields (quote ("title")))
- '(ebib-preload-bib-files (quote ("library.bib")))
- '(proof-electric-terminator-enable t)
- '(proof-three-window-mode-policy (quote hybrid))
- '(reftex-plug-into-AUCTeX t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

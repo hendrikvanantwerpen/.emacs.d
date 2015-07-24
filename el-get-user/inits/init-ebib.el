@@ -1,0 +1,5 @@
+(setq ebib-bib-search-dirs '("~/edu/library"))
+(setq ebib-file-associations '(("pdf" . "evince") ("ps" . "evince")))
+(setq ebib-file-search-dirs nil)
+(setq ebib-index-display-fields '("title"))
+(setq ebib-preload-bib-files '("library.bib"))
