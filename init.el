@@ -1,5 +1,8 @@
 ; setup el-get and MELPA
 
+(when (file-exists-p "~/.secrets.el")
+  (load "~/.secrets.el"))
+
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
