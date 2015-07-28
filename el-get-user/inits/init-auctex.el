@@ -7,7 +7,9 @@
 (setq TeX-output-view-style
       '(("html" "^html$" "x-www-browser %o")
         ("pdf" "^pdf$" "evince %o")))
-(add-hook 'LaTeX-mode-hook 'visual-line-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-buffer)
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (visual-line-mode)
+            (flyspell-mode)
+            (flyspell-buffer)
+            (LaTeX-math-mode)))
