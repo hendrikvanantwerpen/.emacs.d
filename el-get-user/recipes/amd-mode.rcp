@@ -2,4 +2,4 @@
        :type github
        :pkgname "hendrikvanantwerpen/amd-mode.el"
        :depends (js2-mode js-pkg semver auto-complete dash s )
-       :features (amd-dojo-plugins ac-amd-dojo-completions))
+       :features (amd-mode amd-dojo-plugins ac-amd-dojo-completions))

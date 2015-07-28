@@ -44,6 +44,7 @@
         js2-mode
         js2-refactor
         json
+        latex-pretty-symbols
         linum-off
         load-dir
         lorem-ipsum

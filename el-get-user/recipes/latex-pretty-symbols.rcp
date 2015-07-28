@@ -1,0 +1,10 @@
+(:name latex-pretty-symbols
+       :type hg
+       :url "https://bitbucket.org/mortiferus/latex-pretty-symbols.el"
+       :features (latex-pretty-symbols)
+       :depends (cl-lib)
+       :after (defun latex-pretty-symbols ()
+                "Enable LaTeX font-lock and refresh buffer"
+                (interactive)
+                (latex-unicode-simplified)
+                (font-lock-fontify-buffer)))
