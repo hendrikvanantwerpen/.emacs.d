@@ -1,2 +1,2 @@
-(setq ispell-program-name "aspell")
-(setq ispell-dictionary "english")
+(setq ispell-program-name "hunspell")
+(setq ispell-dictionary "en_US")
