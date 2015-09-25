@@ -64,6 +64,11 @@
         yasnippet
         ))
 
+(let ((local-init (format "~/.emacs.d/init-%s.el"
+                          (car (split-string system-name "\\.")))))
+  (if (file-exists-p local-init)
+      (load local-init)))
+
 (el-get-cleanup my:el-get-packages)
 (el-get 'sync my:el-get-packages)
 
