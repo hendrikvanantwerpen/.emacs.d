@@ -9,6 +9,7 @@
         ("pdf" "^pdf$" "evince %o")))
 (add-hook 'LaTeX-mode-hook
           (lambda ()
+            (add-to-list 'fill-nobreak-predicate 'texmathp)
             (visual-line-mode)
             (flyspell-mode)
             (flyspell-buffer)

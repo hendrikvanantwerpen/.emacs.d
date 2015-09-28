@@ -3,8 +3,5 @@
        :url "https://bitbucket.org/hendrikvanantwerpen/latex-pretty-symbols.el"
        :features (latex-pretty-symbols)
        :depends (cl-lib)
-       :after (defun latex-pretty-symbols ()
-                "Enable LaTeX font-lock and refresh buffer"
-                (interactive)
-                (latex-unicode-simplified)
-                (font-lock-fontify-buffer)))
+       :after (progn 
+                (add-hook 'LaTeX-mode-hook 'latex-pretty-symbols-mode)))
