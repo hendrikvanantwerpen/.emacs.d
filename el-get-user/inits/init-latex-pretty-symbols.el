@@ -1,1 +1,1 @@
-(setq-default latex-pretty-symbols-custom nil)
+(setq-default latex-global-pretty-symbols nil)

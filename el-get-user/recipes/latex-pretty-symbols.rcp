@@ -4,4 +4,5 @@
        :features (latex-pretty-symbols)
        :depends (cl-lib)
        :after (progn 
+                (add-hook 'TeX-mode-hook 'latex-pretty-symbols-mode)
                 (add-hook 'LaTeX-mode-hook 'latex-pretty-symbols-mode)))
