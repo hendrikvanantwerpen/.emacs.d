@@ -1,3 +1,7 @@
 (eval-after-load 'agda2
-  (setq agda2-include-dirs
-        (list "." "/usr/local/Cellar/agda/2.4.2.3_2/agda-stdlib/src")))
+  (let* ((agda-mode-path (shell-command-to-string "agda-mode locate"))
+         (agda-stdlib-path (replace-regexp-in-string "\/share.*$" "/agda-stdlib/src" agda-mode-path)))
+    (if (file-exists-p agda-stdlib-path)
+        (setq agda2-include-dirs
+              (list "." agda-stdlib-path))
+      (error "Agda stdlib directory %s not found." agda-stdlib-path))))

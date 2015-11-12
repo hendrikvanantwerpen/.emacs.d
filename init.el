@@ -1,4 +1,7 @@
 ; setup el-get and MELPA
+;
+;; Do not use package.el mechanism
+;(package-initialize)
 
 (when (file-exists-p "~/.secrets.el")
   (load "~/.secrets.el"))
