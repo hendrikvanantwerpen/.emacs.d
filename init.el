@@ -39,8 +39,11 @@
         ensime
         erc
         evil
+        evil-org-mode
         flyspell
         full-ack
+        gradle-mode
+        groovy-emacs-mode
         haskell-mode
         init-loader
         js-pkg
@@ -51,16 +54,20 @@
         linum-off
         load-dir
         lorem-ipsum
+        magit
         markdown-mode
         ;mvn
+        org-mode
         python-mode
+        racket-mode
         rainbow-delimiters
-        reftex
+        ;reftex
         sbt-mode
         scala-mode2
         semver
         smart-operator
         smartparens
+        sml-mode
         smooth-scrolling
         ssh
         undo-tree

@@ -1,6 +1,6 @@
 (eval-after-load 'agda2
   (let* ((agda-mode-path (shell-command-to-string "agda-mode locate"))
-         (agda-stdlib-path (replace-regexp-in-string "\/share.*$" "/agda-stdlib/src" agda-mode-path)))
+         (agda-stdlib-path (replace-regexp-in-string "\/share.*$" "/lib/agda/src" agda-mode-path)))
     (if (file-exists-p agda-stdlib-path)
         (setq agda2-include-dirs
               (list "." agda-stdlib-path))
