@@ -28,12 +28,13 @@
         auto-complete
         auto-complete-auctex
         auto-complete-css
-        auto-complete-emacs-lisp
+        ;auto-complete-emacs-lisp ?deprecated?
         auto-complete-latex
         auto-complete-ruby
         auto-complete-yasnippet
         autopair
         coffee-mode
+        ;company-coq
         ebib
         el-get
         ensime
@@ -58,12 +59,13 @@
         markdown-mode
         ;mvn
         org-mode
+        ;proof-general
         python-mode
         racket-mode
         rainbow-delimiters
         ;reftex
         sbt-mode
-        scala-mode2
+        scala-mode
         semver
         smart-operator
         smartparens
