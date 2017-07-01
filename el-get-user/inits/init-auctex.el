@@ -10,7 +10,12 @@
 (add-hook 'LaTeX-mode-hook
           (lambda ()
             (add-to-list 'fill-nobreak-predicate 'texmathp)
+            (add-to-list 'fill-nobreak-predicate 'lst-nobreak-p)
             (visual-line-mode)
             (flyspell-mode)
             (flyspell-buffer)
             (LaTeX-math-mode)))
+
+(defun lst-nobreak-p ()
+  (and (looking-at "[^\|]*\|")
+       (looking-back "\\lstinline\|[^\|]*")))
