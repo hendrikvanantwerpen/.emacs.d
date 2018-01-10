@@ -16,6 +16,12 @@
             (flyspell-buffer)
             (LaTeX-math-mode)))
 
+;; this uses a heuristic to prevent breaking inline code
+;; any macro ending in inline with weird delimiters won't be broken
 (defun lst-nobreak-p ()
-  (and (looking-at "[^\|]*\|")
-       (looking-back "\\lstinline\|[^\|]*")))
+  (or (and (looking-at "[^\|]*\|")
+           (looking-back "\\\w+inline\|[^\|]*"))
+      (and (looking-at "[^!]*!")
+           (looking-back "\\\w+inline![^!]*"))
+      (and (looking-at "[^<]*>")
+           (looking-back "\\\w+inline<[^>]*"))))
