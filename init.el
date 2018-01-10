@@ -27,14 +27,14 @@
         auctex-latexmk
         auto-complete
         auto-complete-auctex
-        auto-complete-css
+        ;auto-complete-css
         ;auto-complete-emacs-lisp ?deprecated?
         auto-complete-latex
-        auto-complete-ruby
-        auto-complete-yasnippet
+        ;auto-complete-ruby
+        ;auto-complete-yasnippet
         autopair
         coffee-mode
-        ;company-coq
+        company-coq
         ebib
         el-get
         ensime
@@ -43,6 +43,7 @@
         evil-org-mode
         flyspell
         full-ack
+        go-mode
         gradle-mode
         groovy-emacs-mode
         haskell-mode
@@ -59,7 +60,7 @@
         markdown-mode
         ;mvn
         org-mode
-        ;proof-general
+        proof-general
         python-mode
         racket-mode
         rainbow-delimiters
@@ -102,4 +103,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (load-dir)))
  '(safe-local-variable-values (quote ((eval latex-pretty-symbols-mode t)))))
