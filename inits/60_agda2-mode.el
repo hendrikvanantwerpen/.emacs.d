@@ -1,5 +1,6 @@
 (if (executable-find "agda-mode")
-    (load (shell-command-to-string "agda-mode locate")))
+  (load-file (let ((coding-system-for-read 'utf-8))
+                  (shell-command-to-string "agda-mode locate"))))
 (when (require 'agda2-mode nil t)
   (defun my-agda2-mode-hook ()
     "Modify keys and input-mode for agda mode"
