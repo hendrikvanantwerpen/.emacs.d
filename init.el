@@ -34,7 +34,6 @@
         ;auto-complete-yasnippet
         autopair
         coffee-mode
-        company-coq
         ebib
         el-get
         ensime
@@ -60,7 +59,6 @@
         markdown-mode
         ;mvn
         org-mode
-        proof-general
         python-mode
         racket-mode
         rainbow-delimiters
