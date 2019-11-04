@@ -4,3 +4,4 @@ bookmarks
 *.log
 *.dat
 *.elc
+*.last
