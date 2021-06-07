@@ -40,7 +40,7 @@
         erc
         evil
         evil-org-mode
-        flyspell
+        ;flyspell ;el-get installs a very old version
         full-ack
         go-mode
         gradle-mode
