@@ -28,7 +28,7 @@
         auto-complete-auctex
         ;auto-complete-css
         ;auto-complete-emacs-lisp ?deprecated?
-        auto-complete-latex
+        ;auto-complete-latex
         ;auto-complete-ruby
         ;auto-complete-yasnippet
         autopair
@@ -41,15 +41,16 @@
         ;flyspell ;el-get installs a very old version
         full-ack
         go-mode
+        goto-chg ;required for evil?
         gradle-mode
         groovy-emacs-mode
-        haskell-mode
+        ;haskell-mode
         init-loader
         js-pkg
         js2-mode
         js2-refactor
         json
-        latex-pretty-symbols
+        ;latex-pretty-symbols
         linum-off
         load-dir
         lorem-ipsum
